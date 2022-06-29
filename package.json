@@ -1,0 +1,17 @@
+{
+  "name": "demo_electron",
+  "version": "1.0.0",
+  "description": "a demo for electron",
+  "main": "main.ts",
+  "author": "earthaYan",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^19.0.6"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.64"
+  }
+}
