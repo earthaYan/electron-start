@@ -4,6 +4,7 @@
   "description": "a demo for electron",
   "author": "earthaYan",
   "license": "MIT",
+  "main": "./dist/main.js",
   "scripts": {
     "start": "npm run build && electron-forge start --app-path ./dist/main.js",
     "package": "electron-forge package",
