@@ -1,3 +1,6 @@
+"use strict";
+exports.__esModule = true;
+var electron_1 = require("electron");
 window.addEventListener('DOMContentLoaded', function () {
     var replaceText = function (selector, text) {
         var element = document.getElementById(selector);
@@ -8,5 +11,8 @@ window.addEventListener('DOMContentLoaded', function () {
         var dependency = _a[_i];
         replaceText("".concat(dependency, "-version"), process.versions[dependency]);
     }
+});
+electron_1.contextBridge.exposeInMainWorld('myAPI', {
+    hello: '你好'
 });
 //# sourceMappingURL=preload.js.map

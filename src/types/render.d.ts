@@ -1,6 +1,9 @@
+export interface IElectronAPI {
+  hello: string;
+}
 declare global {
   interface Window {
-    hello: string;
+    electronAPI: IElectronAPI;
   }
 }
 export {};
