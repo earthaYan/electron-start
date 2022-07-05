@@ -5,10 +5,10 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.ts'),
+      preload: path.join(__dirname, 'preload.js'),
     },
   });
-  win.loadFile('index.html');
+  win.loadFile(path.join(__dirname, '../index.html'));
   win.webContents.openDevTools();
 };
 app.whenReady().then(() => {
