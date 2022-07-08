@@ -12,7 +12,7 @@ window.addEventListener('DOMContentLoaded', function () {
         replaceText("".concat(dependency, "-version"), process.versions[dependency]);
     }
 });
-electron_1.contextBridge.exposeInMainWorld('myAPI', {
+electron_1.contextBridge.exposeInMainWorld('electronAPI', {
     hello: '你好'
 });
 //# sourceMappingURL=preload.js.map
