@@ -12,7 +12,9 @@ window.addEventListener('DOMContentLoaded', function () {
         replaceText("".concat(dependency, "-version"), process.versions[dependency]);
     }
 });
+// 看上去preload.js是一个中介的角色?
 electron_1.contextBridge.exposeInMainWorld('electronAPI', {
-    hello: '你好'
+    // 暴露接口：使用ipcRenderer发送消息
+    setTitle: function (title) { return electron_1.ipcRenderer.send('set-title', title); }
 });
 //# sourceMappingURL=preload.js.map

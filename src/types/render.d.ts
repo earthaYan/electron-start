@@ -1,5 +1,5 @@
 export interface IElectronAPI {
-  hello: string;
+  setTitle: (title: string) => void;
 }
 declare global {
   interface Window {
