@@ -1,4 +1,4 @@
-import { dialog, IpcMainEvent } from 'electron';
+import { dialog, IpcMainEvent, Menu } from 'electron';
 
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
@@ -24,6 +24,22 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+  const menu = Menu.buildFromTemplate([
+    {
+      label: app.name,
+      submenu: [
+        {
+          click: () => mainWindow.webContents.send('update-counter', 1),
+          label: '自增',
+        },
+        {
+          click: () => mainWindow.webContents.send('update-counter', -1),
+          label: '自减',
+        },
+      ],
+    },
+  ]);
+  Menu.setApplicationMenu(menu);
   mainWindow.loadFile(path.join(__dirname, '../index.html'));
 }
 app.whenReady().then(() => {
