@@ -38,7 +38,6 @@ var _this = this;
 // renderer.ts Renderer Process渲染器进程
 var setButton = document.getElementById('btn');
 var fileButton = document.getElementById('openFile');
-console.log(fileButton);
 var filePathElement = document.getElementById('filePath');
 var timeInput = document.getElementById('title');
 setButton.addEventListener('click', function () {
@@ -47,9 +46,22 @@ setButton.addEventListener('click', function () {
     window.electronAPI.setTitle(title);
 });
 fileButton.addEventListener('click', function () { return __awaiter(_this, void 0, void 0, function () {
+    var filePath;
     return __generator(this, function (_a) {
-        window.electronAPI.openFile();
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, window.electronAPI.openFile()];
+            case 1:
+                filePath = _a.sent();
+                filePathElement.innerText = filePath;
+                return [2 /*return*/];
+        }
     });
 }); });
+var counter = document.getElementById('counter');
+window.electronAPI.onUpdateCounter(function (_event, value) {
+    console.log('监听菜单事件');
+    var oldValue = Number(counter.innerText);
+    var newValue = oldValue + Number(value);
+    counter.innerText = newValue.toString();
+});
 //# sourceMappingURL=renderer.js.map

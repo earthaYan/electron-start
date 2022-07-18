@@ -15,4 +15,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   setTitle: (title: string) => ipcRenderer.send('set-title', title),
   // // renderer->main双向发送
   openFile: () => ipcRenderer.invoke('dialog:openFile'),
+  // main->renderer
+  onUpdateCounter: (callback: any) =>
+    ipcRenderer.on('update-counter', callback),
 });

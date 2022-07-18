@@ -18,6 +18,9 @@ electron_1.contextBridge.exposeInMainWorld('electronAPI', {
     // renderer->main单向发送
     setTitle: function (title) { return electron_1.ipcRenderer.send('set-title', title); },
     // // renderer->main双向发送
-    openFile: function () { return electron_1.ipcRenderer.invoke('dialog:openFile'); }
+    openFile: function () { return electron_1.ipcRenderer.invoke('dialog:openFile'); },
+    onUpdateCounter: function (callback) {
+        return electron_1.ipcRenderer.on('update-counter', callback);
+    }
 });
 //# sourceMappingURL=preload.js.map

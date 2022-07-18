@@ -71,6 +71,22 @@ function createWindow() {
             preload: path.join(__dirname, 'preload.js')
         }
     });
+    var menu = electron_1.Menu.buildFromTemplate([
+        {
+            label: app.name,
+            submenu: [
+                {
+                    click: function () { return mainWindow.webContents.send('update-counter', 1); },
+                    label: '自增'
+                },
+                {
+                    click: function () { return mainWindow.webContents.send('update-counter', -1); },
+                    label: '自减'
+                },
+            ]
+        },
+    ]);
+    electron_1.Menu.setApplicationMenu(menu);
     mainWindow.loadFile(path.join(__dirname, '../index.html'));
 }
 app.whenReady().then(function () {
