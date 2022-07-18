@@ -24,7 +24,6 @@ async function handleFileOpen() {
   }
 }
 function handleThemeToggle() {
-  console.log('切换主题', nativeTheme.shouldUseDarkColors);
   if (nativeTheme.shouldUseDarkColors) {
     nativeTheme.themeSource = 'light';
   } else {
