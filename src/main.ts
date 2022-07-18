@@ -2,7 +2,8 @@ import { dialog, IpcMainEvent, Menu } from 'electron';
 
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-
+// 全局启动沙盒
+// app.enableSandbox()
 function handleSetTitle(event: IpcMainEvent, title: string) {
   const webContents = event.sender;
   const win = BrowserWindow.fromWebContents(webContents);
@@ -22,6 +23,7 @@ function createWindow() {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      sandbox: true,
     },
   });
   const menu = Menu.buildFromTemplate([
