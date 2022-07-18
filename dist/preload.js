@@ -15,6 +15,9 @@ window.addEventListener('DOMContentLoaded', function () {
 // 看上去preload.js是一个中介的角色?
 electron_1.contextBridge.exposeInMainWorld('electronAPI', {
     // 暴露接口：使用ipcRenderer发送消息
-    setTitle: function (title) { return electron_1.ipcRenderer.send('set-title', title); }
+    // renderer->main单向发送
+    setTitle: function (title) { return electron_1.ipcRenderer.send('set-title', title); },
+    // // renderer->main双向发送
+    openFile: function () { return electron_1.ipcRenderer.invoke('dialog:openFile'); }
 });
 //# sourceMappingURL=preload.js.map

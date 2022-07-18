@@ -31,6 +31,7 @@ app.whenReady().then(() => {
   //  renderer->main单向接收
   ipcMain.on('set-title', handleSetTitle);
   // 使用ipcMain.handle设置事件处理器
+  // renderer->main双向
   ipcMain.handle('dialog:openFile', handleFileOpen);
   createWindow();
 });

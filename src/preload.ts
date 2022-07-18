@@ -13,4 +13,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // 暴露接口：使用ipcRenderer发送消息
   // renderer->main单向发送
   setTitle: (title: string) => ipcRenderer.send('set-title', title),
+  // // renderer->main双向发送
+  openFile: () => ipcRenderer.invoke('dialog:openFile'),
 });
