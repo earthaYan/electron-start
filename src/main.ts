@@ -1,6 +1,12 @@
-import { dialog, IpcMainEvent, Menu } from 'electron';
-
-const { app, BrowserWindow, ipcMain } = require('electron');
+import { IpcMainEvent } from 'electron';
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  dialog,
+  nativeTheme,
+  Menu,
+} = require('electron');
 const path = require('path');
 // 全局启动沙盒
 // app.enableSandbox()
@@ -16,6 +22,17 @@ async function handleFileOpen() {
   } else {
     return filePaths[0];
   }
+}
+function handleThemeToggle() {
+  if (nativeTheme.shouldUseDarkColors) {
+    nativeTheme.themeSource = 'light';
+  } else {
+    nativeTheme.themeSource = 'dark';
+  }
+  return nativeTheme.shouldUseDarkColors;
+}
+function handleSystemTheme() {
+  nativeTheme.themeSource = 'system';
 }
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -43,6 +60,7 @@ function createWindow() {
   ]);
   Menu.setApplicationMenu(menu);
   mainWindow.loadFile(path.join(__dirname, '../index.html'));
+  mainWindow.webContents.openDevTools();
 }
 app.whenReady().then(() => {
   // 使用ipcMain.on监听事件window.
@@ -51,6 +69,8 @@ app.whenReady().then(() => {
   // 使用ipcMain.handle设置事件处理器
   // renderer->main双向
   ipcMain.handle('dialog:openFile', handleFileOpen);
+  ipcMain.handle('dark-mode:toggle', handleThemeToggle);
+  ipcMain.handle('dark-mode:system', handleSystemTheme);
   createWindow();
 });
 app.on('window-all-closed', () => {

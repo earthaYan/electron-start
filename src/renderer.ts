@@ -19,3 +19,16 @@ window.electronAPI.onUpdateCounter((_event: any, value: string) => {
   const newValue = oldValue + Number(value);
   counter.innerText = newValue.toString();
 });
+
+const darkBtn = document.querySelector('#toggle-dark-mode');
+const sysBtn = document.querySelector('#reset-to-system');
+darkBtn.addEventListener('click', async () => {
+  const isDarkMode = await window.electronAPI.toggleThemeDarkMode();
+  document.getElementById('theme-source').innerHTML = isDarkMode
+    ? 'Dark'
+    : 'Light';
+});
+sysBtn.addEventListener('click', async () => {
+  await window.electronAPI.toggleThemeSystem();
+  document.getElementById('theme-source').innerHTML = 'System';
+});

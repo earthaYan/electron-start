@@ -1,6 +1,4 @@
-"use strict";
-exports.__esModule = true;
-var electron_1 = require("electron");
+var _a = require('electron'), contextBridge = _a.contextBridge, ipcRenderer = _a.ipcRenderer;
 window.addEventListener('DOMContentLoaded', function () {
     var replaceText = function (selector, text) {
         var element = document.getElementById(selector);
@@ -13,14 +11,17 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 });
 // 看上去preload.js是一个中介的角色?
-electron_1.contextBridge.exposeInMainWorld('electronAPI', {
+contextBridge.exposeInMainWorld('electronAPI', {
     // 暴露接口：使用ipcRenderer发送消息
     // renderer->main单向发送
-    setTitle: function (title) { return electron_1.ipcRenderer.send('set-title', title); },
+    setTitle: function (title) { return ipcRenderer.send('set-title', title); },
     // // renderer->main双向发送
-    openFile: function () { return electron_1.ipcRenderer.invoke('dialog:openFile'); },
+    openFile: function () { return ipcRenderer.invoke('dialog:openFile'); },
+    // main->renderer
     onUpdateCounter: function (callback) {
-        return electron_1.ipcRenderer.on('update-counter', callback);
-    }
+        return ipcRenderer.on('update-counter', callback);
+    },
+    toggleThemeDarkMode: function () { return ipcRenderer.invoke('dark-mode:toggle'); },
+    toggleThemeSystem: function () { return ipcRenderer.invoke('dark-mode:system'); }
 });
 //# sourceMappingURL=preload.js.map

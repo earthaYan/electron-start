@@ -59,9 +59,35 @@ fileButton.addEventListener('click', function () { return __awaiter(_this, void 
 }); });
 var counter = document.getElementById('counter');
 window.electronAPI.onUpdateCounter(function (_event, value) {
-    console.log('监听菜单事件');
     var oldValue = Number(counter.innerText);
     var newValue = oldValue + Number(value);
     counter.innerText = newValue.toString();
 });
+var darkBtn = document.querySelector('#toggle-dark-mode');
+var sysBtn = document.querySelector('#reset-to-system');
+darkBtn.addEventListener('click', function () { return __awaiter(_this, void 0, void 0, function () {
+    var isDarkMode;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, window.electronAPI.toggleThemeDarkMode()];
+            case 1:
+                isDarkMode = _a.sent();
+                document.getElementById('theme-source').innerHTML = isDarkMode
+                    ? 'Dark'
+                    : 'Light';
+                return [2 /*return*/];
+        }
+    });
+}); });
+sysBtn.addEventListener('click', function () { return __awaiter(_this, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, window.electronAPI.toggleThemeSystem()];
+            case 1:
+                _a.sent();
+                document.getElementById('theme-source').innerHTML = 'System';
+                return [2 /*return*/];
+        }
+    });
+}); });
 //# sourceMappingURL=renderer.js.map
