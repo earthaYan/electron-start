@@ -11,5 +11,6 @@ window.addEventListener('DOMContentLoaded', () => {
 // 看上去preload.js是一个中介的角色?
 contextBridge.exposeInMainWorld('electronAPI', {
   // 暴露接口：使用ipcRenderer发送消息
+  // renderer->main单向发送
   setTitle: (title: string) => ipcRenderer.send('set-title', title),
 });
