@@ -1,4 +1,4 @@
-import { IpcMainEvent } from 'electron';
+import { dialog, IpcMainEvent } from 'electron';
 
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
@@ -7,6 +7,14 @@ function handleSetTitle(event: IpcMainEvent, title: string) {
   const webContents = event.sender;
   const win = BrowserWindow.fromWebContents(webContents);
   win.setTitle(title);
+}
+async function handleFileOpen() {
+  const { canceled, filePaths } = await dialog.showOpenDialog({});
+  if (canceled) {
+    return;
+  } else {
+    return filePaths[0];
+  }
 }
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -20,7 +28,10 @@ function createWindow() {
 }
 app.whenReady().then(() => {
   // 使用ipcMain.on监听事件window.
+  //  renderer->main单向接收
   ipcMain.on('set-title', handleSetTitle);
+  // 使用ipcMain.handle设置事件处理器
+  ipcMain.handle('dialog:openFile', handleFileOpen);
   createWindow();
 });
 app.on('window-all-closed', () => {
