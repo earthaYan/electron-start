@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from 'electron';
+const { contextBridge, ipcRenderer } = require('electron');
 window.addEventListener('DOMContentLoaded', () => {
   const replaceText = (selector: string, text: string) => {
     const element = document.getElementById(selector);
@@ -18,4 +18,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // main->renderer
   onUpdateCounter: (callback: any) =>
     ipcRenderer.on('update-counter', callback),
+  toggleThemeDarkMode: () => ipcRenderer.invoke('dark-mode:toggle'),
+  toggleThemeSystem: () => ipcRenderer.invoke('dark-mode:system'),
 });

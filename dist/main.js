@@ -36,9 +36,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var electron_1 = require("electron");
-var _a = require('electron'), app = _a.app, BrowserWindow = _a.BrowserWindow, ipcMain = _a.ipcMain;
+var _a = require('electron'), app = _a.app, BrowserWindow = _a.BrowserWindow, ipcMain = _a.ipcMain, dialog = _a.dialog, nativeTheme = _a.nativeTheme, Menu = _a.Menu;
 var path = require('path');
+// 全局启动沙盒
+// app.enableSandbox()
 function handleSetTitle(event, title) {
     var webContents = event.sender;
     var win = BrowserWindow.fromWebContents(webContents);
@@ -49,7 +50,7 @@ function handleFileOpen() {
         var _a, canceled, filePaths;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0: return [4 /*yield*/, electron_1.dialog.showOpenDialog({})];
+                case 0: return [4 /*yield*/, dialog.showOpenDialog({})];
                 case 1:
                     _a = _b.sent(), canceled = _a.canceled, filePaths = _a.filePaths;
                     if (canceled) {
@@ -63,15 +64,29 @@ function handleFileOpen() {
         });
     });
 }
+function handleThemeToggle() {
+    console.log('切换主题', nativeTheme.shouldUseDarkColors);
+    if (nativeTheme.shouldUseDarkColors) {
+        nativeTheme.themeSource = 'light';
+    }
+    else {
+        nativeTheme.themeSource = 'dark';
+    }
+    return nativeTheme.shouldUseDarkColors;
+}
+function handleSystemTheme() {
+    nativeTheme.themeSource = 'system';
+}
 function createWindow() {
     var mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, 'preload.js'),
+            sandbox: true
         }
     });
-    var menu = electron_1.Menu.buildFromTemplate([
+    var menu = Menu.buildFromTemplate([
         {
             label: app.name,
             submenu: [
@@ -86,8 +101,9 @@ function createWindow() {
             ]
         },
     ]);
-    electron_1.Menu.setApplicationMenu(menu);
+    Menu.setApplicationMenu(menu);
     mainWindow.loadFile(path.join(__dirname, '../index.html'));
+    mainWindow.webContents.openDevTools();
 }
 app.whenReady().then(function () {
     // 使用ipcMain.on监听事件window.
@@ -96,6 +112,8 @@ app.whenReady().then(function () {
     // 使用ipcMain.handle设置事件处理器
     // renderer->main双向
     ipcMain.handle('dialog:openFile', handleFileOpen);
+    ipcMain.handle('dark-mode:toggle', handleThemeToggle);
+    ipcMain.handle('dark-mode:system', handleSystemTheme);
     createWindow();
 });
 app.on('window-all-closed', function () {
