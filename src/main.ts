@@ -23,7 +23,6 @@ function createWindow() {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      sandbox: true,
     },
   });
   const menu = Menu.buildFromTemplate([
@@ -42,6 +41,7 @@ function createWindow() {
     },
   ]);
   Menu.setApplicationMenu(menu);
+  mainWindow.webContents.openDevTools();
   mainWindow.loadFile(path.join(__dirname, '../index.html'));
 }
 app.whenReady().then(() => {
@@ -58,3 +58,15 @@ app.on('window-all-closed', () => {
   // 实践下来控制台项目停止运行并退出
   if (process.platform !== 'darwin') app.quit();
 });
+// ipcMain.on('port', (event) => {
+//   const port = event.ports[0];
+//   // MessagePortMain
+//   port.on('message', (event) => {
+//     // 收到的数据是： { answer: 42 }
+//     const data = event.data;
+//     console.log('收到的数据是', data);
+//   });
+
+//   // MessagePortMain 阻塞消息直到 .start() 方法被调用
+//   port.start();
+// });

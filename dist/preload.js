@@ -19,6 +19,7 @@ electron_1.contextBridge.exposeInMainWorld('electronAPI', {
     setTitle: function (title) { return electron_1.ipcRenderer.send('set-title', title); },
     // // renderer->main双向发送
     openFile: function () { return electron_1.ipcRenderer.invoke('dialog:openFile'); },
+    // main->renderer
     onUpdateCounter: function (callback) {
         return electron_1.ipcRenderer.on('update-counter', callback);
     }

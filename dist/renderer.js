@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
+exports.__esModule = true;
 // renderer.ts Renderer Process渲染器进程
 var setButton = document.getElementById('btn');
 var fileButton = document.getElementById('openFile');
@@ -45,7 +46,7 @@ setButton.addEventListener('click', function () {
     // 在渲染器进程中使用传入的主进程的API/方法
     window.electronAPI.setTitle(title);
 });
-fileButton.addEventListener('click', function () { return __awaiter(_this, void 0, void 0, function () {
+fileButton.addEventListener('click', function () { return __awaiter(void 0, void 0, void 0, function () {
     var filePath;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -59,9 +60,18 @@ fileButton.addEventListener('click', function () { return __awaiter(_this, void 
 }); });
 var counter = document.getElementById('counter');
 window.electronAPI.onUpdateCounter(function (_event, value) {
-    console.log('监听菜单事件');
     var oldValue = Number(counter.innerText);
     var newValue = oldValue + Number(value);
     counter.innerText = newValue.toString();
 });
+// const channel = new MessageChannel();
+// // 消息发送到port1将会被port2接收，反之亦然
+// const port1 = channel.port1;
+// const port2 = channel.port2;
+// // 允许在另一端还没有注册监听器的情况下就通过通道向其发送消息
+// // 消息将排队等待，直到一个监听器注册为止。
+// port2.postMessage({ answer: 12 });
+// // 这次我们通过 ipc 向主进程发送 port1 对象。 类似的，
+// // 我们也可以发送 MessagePorts 到其他 frames, 或发送到 Web Workers, 等.
+// ipcRenderer.postMessage('port', null, [port1]);
 //# sourceMappingURL=renderer.js.map

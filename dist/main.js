@@ -39,6 +39,8 @@ exports.__esModule = true;
 var electron_1 = require("electron");
 var _a = require('electron'), app = _a.app, BrowserWindow = _a.BrowserWindow, ipcMain = _a.ipcMain;
 var path = require('path');
+// 全局启动沙盒
+// app.enableSandbox()
 function handleSetTitle(event, title) {
     var webContents = event.sender;
     var win = BrowserWindow.fromWebContents(webContents);
@@ -87,6 +89,7 @@ function createWindow() {
         },
     ]);
     electron_1.Menu.setApplicationMenu(menu);
+    mainWindow.webContents.openDevTools();
     mainWindow.loadFile(path.join(__dirname, '../index.html'));
 }
 app.whenReady().then(function () {
@@ -104,4 +107,15 @@ app.on('window-all-closed', function () {
     if (process.platform !== 'darwin')
         app.quit();
 });
+// ipcMain.on('port', (event) => {
+//   const port = event.ports[0];
+//   // MessagePortMain
+//   port.on('message', (event) => {
+//     // 收到的数据是： { answer: 42 }
+//     const data = event.data;
+//     console.log('收到的数据是', data);
+//   });
+//   // MessagePortMain 阻塞消息直到 .start() 方法被调用
+//   port.start();
+// });
 //# sourceMappingURL=main.js.map
