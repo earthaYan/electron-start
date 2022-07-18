@@ -1,7 +1,6 @@
 // renderer.ts Renderer Process渲染器进程
 const setButton = document.getElementById('btn');
 const fileButton = document.getElementById('openFile');
-console.log(fileButton);
 const filePathElement = document.getElementById('filePath');
 const timeInput = document.getElementById('title') as HTMLInputElement;
 setButton.addEventListener('click', () => {
