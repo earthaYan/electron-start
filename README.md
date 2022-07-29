@@ -95,13 +95,12 @@ yarn lint
 
 ### 涉及技术栈：
 
-本体：[Electron](https://www.electronjs.org/)
-web 框架：[Vue3](https://vuejs.org)
-项目脚手架：[electron-vite-vue](https://github.com/electron-vite/electron-vite-vue)
-UI 库：[BalmUI](https://material.balmjs.com)
-状态管理：[Vuex](https://vuex.vuejs.org/)
-[TypeScript](https://www.typescriptlang.org/)
-Electron 分发，打包：[electron-builder](https://www.electron.build/)
+- 本体：[Electron](https://www.electronjs.org/)
+- web 框架：[Vue3](https://vuejs.org)
+- 项目脚手架：[electron-vite-vue](https://github.com/electron-vite/electron-vite-vue)
+- UI 库：[BalmUI](https://material.balmjs.com)
+- 状态管理：[Vuex](https://vuex.vuejs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
 
 ### 需求:
 
