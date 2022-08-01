@@ -4,6 +4,7 @@ export const menuTemplate: (
 )[] = [
   {
     label: '文件',
+    id: 'file',
     submenu: [
       {
         label: '新建',
@@ -21,7 +22,7 @@ export const menuTemplate: (
         label: '另存为',
       },
       {
-        label: '分隔',
+        type: 'separator',
       },
       // 分隔线
       {
@@ -32,6 +33,7 @@ export const menuTemplate: (
   },
   {
     label: '编辑',
+    id: 'edit',
     submenu: [
       { label: '撤销' },
       {
@@ -109,6 +111,17 @@ export const menuTemplate: (
       },
       {
         label: '自动换行',
+      },
+    ],
+  },
+  {
+    label: '项目',
+    submenu: [
+      {
+        role: 'reload',
+      },
+      {
+        role: 'forceReload',
       },
     ],
   },
