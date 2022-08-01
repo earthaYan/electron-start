@@ -46,6 +46,7 @@ async function createWindow() {
       contextIsolation: false,
     },
   });
+  // 通过模板生成菜单并设置为顶部菜单栏内容
   const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
   if (app.isPackaged) {
@@ -53,7 +54,7 @@ async function createWindow() {
   } else {
     win.loadURL(url);
     // Open devTool if the app is not packaged
-    // win.webContents.openDevTools();
+    win.webContents.openDevTools();
   }
 
   // Test actively push message to the Electron-Renderer
@@ -106,4 +107,12 @@ ipcMain.handle('open-win', (event, arg) => {
     childWindow.loadURL(`${url}/#${arg}`);
     // childWindow.webContents.openDevTools({ mode: "undocked", activate: true })
   }
+});
+// 让主进程代表渲染器进程显示菜单
+ipcMain.on('show-context-menu', (event) => {
+  const menu = Menu.buildFromTemplate(menuTemplate);
+  console.log(BrowserWindow.fromWebContents(event.sender));
+  menu.popup({
+    window: BrowserWindow.fromWebContents(event.sender) as BrowserWindow,
+  });
 });
