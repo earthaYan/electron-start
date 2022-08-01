@@ -1,6 +1,7 @@
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, Menu } from 'electron';
 import { release } from 'os';
 import { join } from 'path';
+import { menuTemplate } from './index.data';
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration();
@@ -45,13 +46,14 @@ async function createWindow() {
       contextIsolation: false,
     },
   });
-
+  const menu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(menu);
   if (app.isPackaged) {
     win.loadFile(indexHtml);
   } else {
     win.loadURL(url);
     // Open devTool if the app is not packaged
-    win.webContents.openDevTools();
+    // win.webContents.openDevTools();
   }
 
   // Test actively push message to the Electron-Renderer
