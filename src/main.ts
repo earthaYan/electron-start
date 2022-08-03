@@ -4,6 +4,7 @@ import App from './App.vue';
 import BalmUI from 'balm-ui';
 import BalmUIPlus from 'balm-ui-plus';
 import 'balm-ui-css';
+import './assets/reset.less';
 createApp(App)
   .use(BalmUI)
   .use(BalmUIPlus)
