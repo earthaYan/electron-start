@@ -37,6 +37,13 @@ export default defineConfig({
       renderer: {},
     }),
   ],
+  resolve: {
+    alias: {
+      vue: 'vue/dist/vue.esm-bundler.js',
+      'balm-ui-plus': 'balm-ui/dist/balm-ui-plus.esm.js',
+      'balm-ui-css': 'balm-ui/dist/balm-ui.css',
+    },
+  },
   server: {
     host: pkg.env.VITE_DEV_SERVER_HOST,
     port: pkg.env.VITE_DEV_SERVER_PORT,

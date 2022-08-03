@@ -10,10 +10,14 @@
     "sourceMap": true,
     "baseUrl": "./",
     "strict": true,
-    "paths": {},
+    "paths": {
+      "balm-ui": ["node_modules/balm-ui/dist/balm-ui.d.ts"],
+      "balm-ui-plus": ["node_modules/balm-ui/dist/balm-ui-plus.d.ts"]
+    },
     "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
   },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue","electron/**/*.ts","electron/**/*.d.ts"],
   "references": [
     { "path": "./tsconfig.node.json" }
   ]
