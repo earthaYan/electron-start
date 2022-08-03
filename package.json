@@ -34,5 +34,7 @@
     "vue3",
     "vue"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "balm-ui": "^10.10.0"
+  }
 }
