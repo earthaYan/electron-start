@@ -3,6 +3,7 @@ import { reactive,  ref } from 'vue'
 import {UiTextfield} from 'balm-ui'
 import {UiEditor} from 'balm-ui-plus'
 import { IEditor } from './editor.js';
+import {ipcRenderer} from 'electron'
 defineProps()
 const editor = ref<IEditor|null>(null)
 const editingText=ref('')
@@ -15,6 +16,12 @@ const handleTitleChange=(e:InputEvent)=>{
   const currentTitle=(e?.target as HTMLInputElement)?.value;
   title.value=currentTitle;
 }
+ipcRenderer.on('openExistFile', (event, message) => {
+  const pageTitle = decodeURIComponent(message[0].title);
+  const pageContent = decodeURIComponent(message[0].content);
+  title.value=pageTitle
+  editingText.value=pageContent
+});
 </script>
 
 <template>

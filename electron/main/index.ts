@@ -158,14 +158,17 @@ export function openExistFile(): void {
       if (!res.canceled) {
         const filePath = res.filePaths[0];
         let titleTemp = res.filePaths[0].split('\\');
-        let title = encodeURIComponent(
-          titleTemp[titleTemp.length - 1].split('.')[0]
-        );
+        let title = titleTemp[titleTemp.length - 1].split('.')[0];
         fs.readFile(filePath, { encoding: 'utf-8' }, (err, data) => {
           if (err) {
             throw err;
           }
-          // 把内容传给渲染进程,再传给vue程序
+          win?.webContents.send('openExistFile', [
+            {
+              title: encodeURIComponent(title),
+              content: encodeURIComponent(data),
+            },
+          ]);
         });
       }
     });
