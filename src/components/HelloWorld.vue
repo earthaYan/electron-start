@@ -1,52 +1,33 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
-defineProps<{ msg: string }>()
-
-const count = ref(0)
+import { reactive,  ref } from 'vue'
+import {UiTextfield} from 'balm-ui'
+import {UiEditor} from 'balm-ui-plus'
+import { IEditor } from './editor.js';
+defineProps()
+const editor = ref<IEditor|null>(null)
+const editingText=ref('')
+const title=ref('')
+const state=reactive({
+  editingText,
+  title
+})
+const handleTitleChange=(e:InputEvent)=>{
+  const currentTitle=(e?.target as HTMLInputElement)?.value;
+  title.value=currentTitle;
+}
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-
-  <p>
-    Recommended IDE setup:
-    <a href="https://code.visualstudio.com/" target="_blank">VS Code</a>
-    +
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-  </p>
-
-  <p>See <code>README.md</code> for more information.</p>
-
-  <p>
-    <a href="https://vitejs.dev/guide/features.html" target="_blank">
-      Vite Docs
-    </a>
-    |
-    <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
-  </p>
-
-  <button type="button" @click="count++">count is: {{ count }}</button>
-  <p>
-    Edit
-    <code>components/HelloWorld.vue</code> to test hot module replacement.
-  </p>
+  <!-- 标题 -->
+  <div class="title">
+    <ui-textfield v-model="state.title" placeholder="标题" @change="handleTitleChange"></ui-textfield>
+  </div>
+  <ui-editor ref="editor" v-model="state.editingText" theme="snow"/>
 </template>
 
-<style scoped>
-a {
-  color: #42b983;
-}
-
-label {
-  margin: 0 0.5em;
-  font-weight: bold;
-}
-
-code {
-  background-color: #eee;
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: #304455;
+<style lang="less" scoped>
+.title{
+  text-align: center;
+  margin-bottom: 20px;
 }
 </style>
