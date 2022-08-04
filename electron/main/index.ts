@@ -1,8 +1,8 @@
-import { app, BrowserWindow, shell, ipcMain, Menu } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, Menu, dialog } from 'electron';
 import { release } from 'os';
 import { join } from 'path';
 import { menuTemplate } from './index.data';
-
+import * as fs from 'fs';
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration();
 
@@ -116,3 +116,91 @@ ipcMain.on('show-context-menu', (event) => {
     window: BrowserWindow.fromWebContents(event.sender) as BrowserWindow,
   });
 });
+export function openExistFile(): void {
+  // 第一个参数browserWindow允许该对话框将自身附加到父窗口, 作为父窗口的模态框
+  dialog
+    .showOpenDialog(win as BrowserWindow, {
+      // 对话框窗口标题
+      title: '选择文件',
+      // 对话框默认展示路径
+      defaultPath: '',
+      // 确认按钮自定义名称,windows默认值是 打开
+      buttonLabel: '选定离手',
+      // 底部文件过滤,指定某种后缀，并不能过滤文件夹
+      filters: [
+        {
+          name: '文本文档',
+          extensions: ['txt'],
+        },
+        {
+          name: 'oneNote',
+          extensions: ['one', 'onetoc*'],
+        },
+
+        {
+          name: '所有文件',
+          extensions: ['*'],
+        },
+      ],
+      properties: [
+        'openFile',
+        // 允许多选
+        // 'multiSelections',
+        'showHiddenFiles',
+        // 当输入的文件路径不存在的时候，提示是否要创建该文件
+        // 并不会真正创建,只是允许返回一些不存在地址交给应用程序去创建
+        'promptToCreate',
+        // 不要将正在打开的项目添加到最近使用中
+        'dontAddToRecent',
+      ],
+    })
+    .then((res) => {
+      if (!res.canceled) {
+        const filePath = res.filePaths[0];
+        let titleTemp = res.filePaths[0].split('\\');
+        let title = titleTemp[titleTemp.length - 1].split('.')[0];
+        fs.readFile(filePath, { encoding: 'utf-8' }, (err, data) => {
+          if (err) {
+            throw err;
+          }
+          win?.webContents.send('openExistFile', [
+            {
+              title: encodeURIComponent(title),
+              content: encodeURIComponent(data),
+            },
+          ]);
+        });
+      }
+    });
+}
+export function openSaveDialog(): void {
+  dialog.showSaveDialog({
+    title: '保存内容',
+    defaultPath: '',
+    buttonLabel: '备份至本地',
+    filters: [],
+    properties: ['dontAddToRecent', 'showHiddenFiles'],
+  });
+}
+export function openMessageBox(): void {
+  dialog.showMessageBox({
+    // 主题消息
+    message: '当前操作违法了',
+    // 消息类型: "none", "info", "error", "question"
+    type: 'error',
+    // 按钮数组,置空或不设置会显示确定按钮
+    buttons: [],
+    // 对话框打开的时候，设置默认选中的按钮，值为在 buttons 数组中的索引.
+    defaultId: 1,
+    // 左上角标题
+    title: '友情提示',
+    // message下的提示内容
+    detail: '详情',
+    // 按钮是否以链接方式呈现
+    noLink: false,
+    // 规范跨平台的键盘访问键
+    normalizeAccessKeys: true,
+    checkboxLabel: '是否认可该结论',
+    checkboxChecked: true,
+  });
+}

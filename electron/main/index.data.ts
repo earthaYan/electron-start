@@ -1,3 +1,6 @@
+import { dialog } from 'electron';
+import { openExistFile, openMessageBox, openSaveDialog } from '.';
+
 export const menuTemplate: (
   | Electron.MenuItemConstructorOptions
   | Electron.MenuItem
@@ -14,12 +17,22 @@ export const menuTemplate: (
       },
       {
         label: '打开',
+        /**
+         * 打开文件功能：
+          1.用户点击electron的 打开菜单 ，弹出系统的文件选择弹窗
+          2.用户选中文件，点击确定，electron获取文件名和文件内容,读取文件内容
+          3.electron把文件名和文件内容转换成字符串传给vue程序
+          4.vue页面根据获取到的两个变量显示标题和内容
+         */
+        click: openExistFile,
       },
       {
         label: '保存',
+        click: openSaveDialog,
       },
       {
         label: '另存为',
+        click: openMessageBox,
       },
       {
         type: 'separator',
