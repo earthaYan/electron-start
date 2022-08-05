@@ -25,6 +25,10 @@ ipcRenderer.on('save',(event,isStartSave)=>{
     ipcRenderer.invoke('dialog:save',encodeURIComponent(JSON.stringify({title:title.value,editingText:editingText.value})) )
   }
 })
+ipcRenderer.on('create_new_file',(_,isCreating)=>{
+  title.value='';
+  editingText.value=''
+})
 </script>
 
 <template>

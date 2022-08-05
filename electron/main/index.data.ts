@@ -10,6 +10,9 @@ export const menuTemplate: (
     submenu: [
       {
         label: '新建',
+        click(menuItem, browserWindow, event) {
+          browserWindow?.webContents.postMessage('create_new_file', true);
+        },
       },
       {
         label: '新建窗口',
