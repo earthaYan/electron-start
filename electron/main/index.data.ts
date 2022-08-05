@@ -1,5 +1,4 @@
-import { dialog } from 'electron';
-import { openExistFile, openMessageBox, openSaveDialog } from '.';
+import { openExistFile, openMessageBox, openSaveDialogStart } from '.';
 
 export const menuTemplate: (
   | Electron.MenuItemConstructorOptions
@@ -28,7 +27,13 @@ export const menuTemplate: (
       },
       {
         label: '保存',
-        click: openSaveDialog,
+        /**
+         * 保存文件功能
+         * 1.用户点击保存按钮，获取当前标题和内容，渲染进程把信息传给主进程
+         * 2.electron弹出保存弹窗，用户点击确定，
+         * 3.写入文件到系统本地
+         */
+        click: openSaveDialogStart,
       },
       {
         label: '另存为',
