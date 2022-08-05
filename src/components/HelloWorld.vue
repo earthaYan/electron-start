@@ -12,22 +12,24 @@ const state=reactive({
   editingText,
   title
 })
-const handleTitleChange=(e:InputEvent)=>{
-  const currentTitle=(e?.target as HTMLInputElement)?.value;
+const handleTitleChange=(currentTitle:string)=>{
   title.value=currentTitle;
+}
+const handleContentChange=(currentContent:string)=>{
+  editingText.value=currentContent
 }
 ipcRenderer.on('openExistFile', (event, message) => {
   const pageTitle = decodeURIComponent(message[0].title);
   const pageContent = decodeURIComponent(message[0].content);
-  title.value=pageTitle
-  editingText.value=pageContent
+  handleContentChange(pageContent)
+  handleTitleChange(pageTitle)
 });
 </script>
 
 <template>
   <!-- 标题 -->
   <div class="title">
-    <ui-textfield v-model="state.title" placeholder="标题" @change="handleTitleChange"></ui-textfield>
+    <ui-textfield v-model="state.title" placeholder="标题"></ui-textfield>
   </div>
   <ui-editor ref="editor" v-model="state.editingText" theme="snow"/>
 </template>
