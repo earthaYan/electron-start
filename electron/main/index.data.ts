@@ -37,7 +37,7 @@ export const menuTemplate: (
       },
       {
         label: '另存为',
-        click: openMessageBox,
+        click: openSaveDialogStart,
       },
       {
         type: 'separator',
