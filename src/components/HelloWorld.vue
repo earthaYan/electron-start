@@ -26,8 +26,11 @@ ipcRenderer.on('save',(event,isStartSave)=>{
   }
 })
 ipcRenderer.on('create_new_file',(_,isCreating)=>{
-  title.value='';
-  editingText.value=''
+  if(isCreating){
+    title.value='';
+    editingText.value=''
+  }
+
 })
 </script>
 
