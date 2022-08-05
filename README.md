@@ -24,10 +24,6 @@
 npm create electron-vite
 ```
 
-<!-- [![quick-start](https://asciinema.org/a/483731.svg)](https://asciinema.org/a/483731) -->
-
-![electron-vite-vue.gif](https://github.com/electron-vite/electron-vite-vue/blob/main/public/electron-vite-vue.gif?raw=true)
-
 ## Debug
 
 ![electron-vite-react-debug.gif](https://github.com/electron-vite/electron-vite-react/blob/main/public/electron-vite-react-debug.gif?raw=true)
@@ -112,11 +108,11 @@ yarn lint
 
 ##### 文件
 
-- [ ] 新建
-- [ ] 新建窗口
-- [ ] 打开
-- [ ] 保存
-- [ ] 另存为
+- [x] 新建
+- [x] 新建窗口
+- [x] 打开
+- [x] 保存
+- [x] 另存为
 - [x] 退出
 
 ##### 编辑
