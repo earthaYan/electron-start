@@ -111,7 +111,6 @@ ipcMain.handle('open-win', (event, arg) => {
 // 让主进程代表渲染器进程显示菜单
 ipcMain.on('show-context-menu', (event) => {
   const menu = Menu.buildFromTemplate(menuTemplate);
-  console.log(BrowserWindow.fromWebContents(event.sender));
   menu.popup({
     window: BrowserWindow.fromWebContents(event.sender) as BrowserWindow,
   });
@@ -173,14 +172,43 @@ export function openExistFile(): void {
       }
     });
 }
-export function openSaveDialog(): void {
-  dialog.showSaveDialog({
-    title: '保存内容',
-    defaultPath: '',
-    buttonLabel: '备份至本地',
-    filters: [],
-    properties: ['dontAddToRecent', 'showHiddenFiles'],
-  });
+let title = '',
+  content = '';
+ipcMain.handle('dialog:save', async (event, args) => {
+  const state = await JSON.parse(decodeURIComponent(args));
+  title = state.title;
+  content = state.editingText;
+  openSaveDialog();
+});
+function openSaveDialog(): void {
+  dialog
+    .showSaveDialog({
+      title: '保存',
+      defaultPath: !!title ? `${title}.md` : '',
+      filters: [
+        {
+          name: '文本文档',
+          extensions: ['txt', 'md'],
+        },
+        {
+          name: '所有文档',
+          extensions: ['*'],
+        },
+      ],
+      properties: ['dontAddToRecent', 'showHiddenFiles'],
+    })
+    .then((res) => {
+      if (!res.canceled) {
+        const filePath = res.filePath;
+        fs.writeFile(filePath ?? '', content, {}, () => {
+          console.log('successs');
+        });
+      }
+    });
+}
+export function openSaveDialogStart(): void {
+  // 接收渲染进程的信息
+  win?.webContents.postMessage('save', true);
 }
 export function openMessageBox(): void {
   dialog.showMessageBox({
