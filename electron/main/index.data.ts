@@ -1,4 +1,4 @@
-import { openExistFile, openMessageBox, openSaveDialogStart } from '.';
+import { handleOpenNewWin, openExistFile, openMessageBox } from '.';
 
 export const menuTemplate: (
   | Electron.MenuItemConstructorOptions
@@ -13,6 +13,7 @@ export const menuTemplate: (
       },
       {
         label: '新建窗口',
+        click: handleOpenNewWin,
       },
       {
         label: '打开',
@@ -33,11 +34,15 @@ export const menuTemplate: (
          * 2.electron弹出保存弹窗，用户点击确定，
          * 3.写入文件到系统本地
          */
-        click: openSaveDialogStart,
+        click(menuItem, browserWindow, event) {
+          browserWindow?.webContents.postMessage('save', true);
+        },
       },
       {
         label: '另存为',
-        click: openSaveDialogStart,
+        click(menuItem, browserWindow, event) {
+          browserWindow?.webContents.postMessage('save', true);
+        },
       },
       {
         type: 'separator',

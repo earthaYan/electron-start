@@ -1,4 +1,12 @@
-import { app, BrowserWindow, shell, ipcMain, Menu, dialog } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  shell,
+  ipcMain,
+  Menu,
+  dialog,
+  MenuItem,
+} from 'electron';
 import { release } from 'os';
 import { join } from 'path';
 import { menuTemplate } from './index.data';
@@ -32,11 +40,14 @@ const preload = join(__dirname, '../preload/index.js');
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin
 const url = `http://${process.env['VITE_DEV_SERVER_HOST']}:${process.env['VITE_DEV_SERVER_PORT']}`;
 const indexHtml = join(ROOT_PATH.dist, 'index.html');
-
-async function createWindow() {
+let title = '',
+  content = '';
+async function createWindow(width?: number, height?: number) {
   win = new BrowserWindow({
     title: 'Main window',
     icon: join(ROOT_PATH.public, 'favicon.ico'),
+    width: width ?? 800,
+    height: height ?? 600,
     webPreferences: {
       preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
@@ -54,7 +65,9 @@ async function createWindow() {
   } else {
     win.loadURL(url);
     // Open devTool if the app is not packaged
-    win.webContents.openDevTools();
+    if (!app.isPackaged) {
+      win.webContents.openDevTools();
+    }
   }
 
   // Test actively push message to the Electron-Renderer
@@ -69,7 +82,7 @@ async function createWindow() {
   });
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => createWindow());
 
 app.on('window-all-closed', () => {
   win = null;
@@ -93,21 +106,6 @@ app.on('activate', () => {
   }
 });
 
-// new window example arg: new windows url
-ipcMain.handle('open-win', (event, arg) => {
-  const childWindow = new BrowserWindow({
-    webPreferences: {
-      preload,
-    },
-  });
-
-  if (app.isPackaged) {
-    childWindow.loadFile(indexHtml, { hash: arg });
-  } else {
-    childWindow.loadURL(`${url}/#${arg}`);
-    // childWindow.webContents.openDevTools({ mode: "undocked", activate: true })
-  }
-});
 // 让主进程代表渲染器进程显示菜单
 ipcMain.on('show-context-menu', (event) => {
   const menu = Menu.buildFromTemplate(menuTemplate);
@@ -172,14 +170,13 @@ export function openExistFile(): void {
       }
     });
 }
-let title = '',
-  content = '';
-ipcMain.handle('dialog:save', async (event, args) => {
-  const state = await JSON.parse(decodeURIComponent(args));
-  title = state.title;
-  content = state.editingText;
-  openSaveDialog();
-});
+export function handleOpenNewWin(
+  menuItem: MenuItem,
+  currentWin: BrowserWindow
+): void {
+  createWindow(400, 600);
+}
+
 function openSaveDialog(): void {
   dialog
     .showSaveDialog({
@@ -206,10 +203,13 @@ function openSaveDialog(): void {
       }
     });
 }
-export function openSaveDialogStart(): void {
-  // 接收渲染进程的信息
-  win?.webContents.postMessage('save', true);
-}
+ipcMain.handle('dialog:save', async (event, args) => {
+  const state = await JSON.parse(decodeURIComponent(args));
+  title = state.title;
+  content = state.editingText;
+  openSaveDialog();
+});
+
 export function openMessageBox(): void {
   dialog.showMessageBox({
     // 主题消息
