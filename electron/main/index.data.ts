@@ -28,6 +28,12 @@ export const menuTemplate: (
       },
       {
         label: '保存',
+        /**
+         * 保存文件功能
+         * 1.用户点击保存按钮，electron弹出保存弹窗
+         * 2.用户点击确定，写入文件
+         * 3.将文件保存到系统本地
+         */
         click: openSaveDialog,
       },
       {
