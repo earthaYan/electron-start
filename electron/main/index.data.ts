@@ -61,21 +61,25 @@ export const menuTemplate: (
     label: '编辑',
     id: 'edit',
     submenu: [
-      { label: '撤销' },
+      { label: '撤销', role: 'undo' },
       {
         type: 'separator',
       },
       {
         label: '剪切',
+        role: 'cut',
       },
       {
         label: '复制',
+        role: 'copy',
       },
       {
         label: '粘贴',
+        role: 'paste',
       },
       {
         label: '删除',
+        role: 'delete',
       },
       {
         type: 'separator',
@@ -100,6 +104,7 @@ export const menuTemplate: (
       },
       {
         label: '全选',
+        role: 'selectAll',
       },
       {
         label: '时间/日期',

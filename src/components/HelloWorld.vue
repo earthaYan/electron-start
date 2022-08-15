@@ -5,7 +5,6 @@ import {UiEditor} from 'balm-ui-plus'
 import { IEditor } from './editor.js';
 import {ipcRenderer} from 'electron'
 defineProps()
-const editor = ref<IEditor|null>(null)
 const editingText=ref('')
 const title=ref('')
 const handleTitleChange=(currentTitle:string)=>{
@@ -39,7 +38,7 @@ ipcRenderer.on('create_new_file',(_,isCreating)=>{
   <div class="title">
     <ui-textfield v-model="title" placeholder="标题"/>
   </div>
-  <ui-editor  v-model="editingText" theme="snow"/>
+  <ui-editor v-model="editingText" theme="snow" with-counter toolbar="full"/>
 </template>
 
 <style lang="less" scoped>
