@@ -61,13 +61,21 @@ export const menuTemplate: (
     label: '编辑',
     id: 'edit',
     submenu: [
-      { label: '撤销', role: 'undo' },
+      {
+        label: '撤销',
+        // 撤销最新一步操作undo
+        click(menuItem, browserWindow, event) {
+          browserWindow?.webContents.send('edit', 'undo');
+        },
+      },
       {
         type: 'separator',
       },
       {
         label: '剪切',
-        role: 'cut',
+        click(menuItem, browserWindow, event) {
+          browserWindow?.webContents.send('edit', 'cut');
+        },
       },
       {
         label: '复制',
