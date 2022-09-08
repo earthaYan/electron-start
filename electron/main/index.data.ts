@@ -74,20 +74,26 @@ export const menuTemplate: (
       {
         label: '剪切',
         click(menuItem, browserWindow, event) {
-          browserWindow?.webContents.send('edit', 'cut');
+          browserWindow?.webContents.cut();
         },
       },
       {
         label: '复制',
-        role: 'copy',
+        click(menuItem, browserWindow, event) {
+          browserWindow?.webContents.copy();
+        },
       },
       {
         label: '粘贴',
-        role: 'paste',
+        click(menuItem, browserWindow, event) {
+          browserWindow?.webContents.paste();
+        },
       },
       {
         label: '删除',
-        role: 'delete',
+        click(menuItem, browserWindow, event) {
+          browserWindow?.webContents.delete();
+        },
       },
       {
         type: 'separator',

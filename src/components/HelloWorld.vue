@@ -39,6 +39,7 @@ ipcRenderer.on('edit',(_,type)=>{
     case 'undo':
       quill.history.undo()
       break
+    
   }
 })
 </script>
