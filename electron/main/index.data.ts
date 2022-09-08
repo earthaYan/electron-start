@@ -118,7 +118,9 @@ export const menuTemplate: (
       },
       {
         label: '全选',
-        role: 'selectAll',
+        click(menuItem, browserWindow, event) {
+          browserWindow?.webContents.selectAll();
+        },
       },
       {
         label: '时间/日期',
