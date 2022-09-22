@@ -118,12 +118,6 @@ export const menuTemplate: (
         label: '查找',
       },
       {
-        label: '查找上一个',
-      },
-      {
-        label: '查找下一个',
-      },
-      {
         label: '替换',
       },
       {
