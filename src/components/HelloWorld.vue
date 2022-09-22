@@ -81,7 +81,7 @@ ipcRenderer.on('edit',(_,type)=>{
         break
       case 'selectAll':
         handleSelectAll(quill)
-        break
+        break 
     }
 })
 

@@ -31,12 +31,6 @@ export const menuTemplate: (
       },
       {
         label: '保存',
-        /**
-         * 保存文件功能
-         * 1.用户点击保存按钮，获取当前标题和内容，渲染进程把信息传给主进程
-         * 2.electron弹出保存弹窗，用户点击确定，
-         * 3.写入文件到系统本地
-         */
         click(menuItem, browserWindow, event) {
           browserWindow?.webContents.postMessage('save', true);
         },
@@ -116,6 +110,9 @@ export const menuTemplate: (
       },
       {
         label: '查找',
+        click(menuItem, browserWindow, event) {
+          browserWindow?.webContents.send('edit', 'find');
+        },
       },
       {
         label: '替换',
