@@ -63,7 +63,6 @@ export const menuTemplate: (
     submenu: [
       {
         label: '撤销',
-        // 撤销最新一步操作undo
         click(menuItem, browserWindow, event) {
           browserWindow?.webContents.send('edit', 'undo');
         },
@@ -71,28 +70,45 @@ export const menuTemplate: (
       {
         type: 'separator',
       },
-      {
-        label: '剪切',
-        click(menuItem, browserWindow, event) {
-          browserWindow?.webContents.cut();
-        },
-      },
+
       {
         label: '复制',
         click(menuItem, browserWindow, event) {
-          browserWindow?.webContents.copy();
+          browserWindow?.webContents.send('edit', 'copy');
         },
       },
       {
         label: '粘贴',
         click(menuItem, browserWindow, event) {
-          browserWindow?.webContents.paste();
+          browserWindow?.webContents.send('edit', 'paste');
         },
       },
       {
+        label: '剪切',
+        click(menuItem, browserWindow, event) {
+          browserWindow?.webContents.send('edit', 'cut');
+        },
+      },
+
+      {
         label: '删除',
         click(menuItem, browserWindow, event) {
-          browserWindow?.webContents.delete();
+          browserWindow?.webContents.send('edit', 'delete');
+        },
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: '全选',
+        click(menuItem, browserWindow, event) {
+          browserWindow?.webContents.send('edit', 'selectAll');
+        },
+      },
+      {
+        label: '时间/日期',
+        click(menuItem, browserWindow, event) {
+          browserWindow?.webContents.send('edit', 'date');
         },
       },
       {
@@ -113,23 +129,15 @@ export const menuTemplate: (
       {
         label: '转到',
       },
-      {
-        type: 'separator',
-      },
-      {
-        label: '全选',
-        click(menuItem, browserWindow, event) {
-          browserWindow?.webContents.selectAll();
-        },
-      },
-      {
-        label: '时间/日期',
-      },
+
       {
         type: 'separator',
       },
       {
         label: '字体',
+        click(menuItem, browserWindow, event) {
+          browserWindow?.webContents.send('edit', 'font');
+        },
       },
     ],
   },
