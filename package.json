@@ -38,6 +38,8 @@
     "vue"
   ],
   "dependencies": {
-    "balm-ui": "^10.10.0"
+    "@electron/remote": "^2.0.8",
+    "balm-ui": "^10.10.0",
+    "electron-find": "^1.0.7"
   }
 }

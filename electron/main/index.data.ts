@@ -1,4 +1,4 @@
-import { handleOpenNewWin, openExistFile, openMessageBox } from '.';
+import { handleOpenNewWin, openExistFile } from '.';
 
 export const menuTemplate: (
   | Electron.MenuItemConstructorOptions
@@ -110,17 +110,8 @@ export const menuTemplate: (
       },
       {
         label: '查找',
-        click(menuItem, browserWindow, event) {
-          browserWindow?.webContents.send('edit', 'find');
-        },
+        accelerator: 'CmdOrCtrl+ F',
       },
-      {
-        label: '替换',
-      },
-      {
-        label: '转到',
-      },
-
       {
         type: 'separator',
       },

@@ -84,6 +84,18 @@ ipcRenderer.on('edit',(_,type)=>{
         break 
     }
 })
+const FindInPage = require('electron-find').FindInPage;
+const remote=require('@electron/remote')
+
+const currentWebContent=remote.getCurrentWebContents()
+let findInPage = new FindInPage(remote.getCurrentWebContents(),{
+  preload:true,
+  offsetTop: 6,
+  offsetRight: 10
+});
+ipcRenderer.on('on-find', (e, args) => {
+  findInPage.openFindWindow();
+});
 
 
 </script>

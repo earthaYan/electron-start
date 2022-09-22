@@ -128,6 +128,11 @@
     global-agent "^3.0.0"
     global-tunnel-ng "^2.7.1"
 
+"@electron/remote@^2.0.8":
+  version "2.0.8"
+  resolved "https://registry.npmmirror.com/@electron/remote/-/remote-2.0.8.tgz#85ff321f0490222993207106e2f720273bb1a5c3"
+  integrity sha512-P10v3+iFCIvEPeYzTWWGwwHmqWnjoh8RYnbtZAb3RlQefy4guagzIwcWtfftABIfm6JJTNQf4WPSKWZOpLmHXw==
+
 "@electron/universal@1.2.1":
   version "1.2.1"
   resolved "https://registry.npmmirror.com/@electron/universal/-/universal-1.2.1.tgz#3c2c4ff37063a4e9ab1e6ff57db0bc619bc82339"
@@ -1738,6 +1743,11 @@ electron-builder@^23.1.0:
     read-config-file "6.2.0"
     update-notifier "^5.1.0"
     yargs "^17.0.1"
+
+electron-find@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npmmirror.com/electron-find/-/electron-find-1.0.7.tgz#12a861fd4f264f897075fff5c2e612556bc21c83"
+  integrity sha512-C2FQJuk8567P2a2loBNwl5c8kwOTQVMB0capgHtPI7zKwZG16X0UxG+sNYZExQfnJ0PA+ecECA/4LcXxQa2TCA==
 
 electron-osx-sign@^0.6.0:
   version "0.6.0"

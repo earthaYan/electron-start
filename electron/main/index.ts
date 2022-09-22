@@ -6,6 +6,7 @@ import {
   Menu,
   dialog,
   MenuItem,
+  globalShortcut,
 } from 'electron';
 import { release } from 'os';
 import { join } from 'path';
@@ -56,6 +57,24 @@ async function createWindow(width?: number, height?: number) {
       nodeIntegration: true,
       contextIsolation: false,
     },
+  });
+  // 使用remote必须添加
+  const remoteMain = require('@electron/remote/main');
+  remoteMain.initialize();
+  remoteMain.enable(win.webContents);
+
+  win.on('focus', () => {
+    // 在应用程序没有键盘焦点时，监听键盘事件
+    // 注册CTRL+F快捷键监听器
+    globalShortcut.register('CommandOrControl+F', function () {
+      if (win && win.webContents) {
+        win.webContents.send('on-find', '');
+      }
+    });
+  });
+  // 注销全局快捷键
+  win.on('blur', () => {
+    globalShortcut.unregister('CommandOrControl+F');
   });
   // 通过模板生成菜单并设置为顶部菜单栏内容
   const menu = Menu.buildFromTemplate(menuTemplate);
@@ -176,7 +195,6 @@ export function handleOpenNewWin(
 ): void {
   createWindow(400, 600);
 }
-
 function openSaveDialog(): void {
   dialog
     .showSaveDialog({
